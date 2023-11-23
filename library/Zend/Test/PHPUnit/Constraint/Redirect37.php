@@ -180,7 +180,7 @@ class Zend_Test_PHPUnit_Constraint_Redirect37 extends Constraint
      *     protected function fail($other, $description, PHPUnit_Framework_ComparisonFailure $comparisonFailure = NULL)
      * We use the new interface for PHP-strict checking
      */
-    public function fail($other, $description, ComparisonFailure $cannot_be_used = NULL): void
+    public function fail($other, $description, ComparisonFailure $cannot_be_used = NULL): never
     {
         require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
         switch ($this->_assertType) {

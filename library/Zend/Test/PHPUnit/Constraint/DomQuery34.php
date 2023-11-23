@@ -212,7 +212,7 @@ class Zend_Test_PHPUnit_Constraint_DomQuery34 extends Constraint
      * @return void
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function fail($other, $description, $not = false): void
+    public function fail($other, $description, $not = false): never
     {
         require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
         switch ($this->_assertType) {
