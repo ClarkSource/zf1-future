@@ -1,41 +1,41 @@
 include:
-  - template: Composer.gitlab-ci.yml
+    -   template: Composer.gitlab-ci.yml
 
 cache:
-  paths:
-    - vendor/
-    - bin/
-    - /composer
-    - /composer-cache
+    paths:
+        - vendor/
+        - bin/
+        - /composer
+        - /composer-cache
 
 test:
-  image: $CONTAINER_REGISTRY/devops/php:$PHP_VERSION
-  parallel:
-    matrix:
-      - PHP_VERSION: ['8.1','8.2']
-  stage: test
-  variables:
-    MYSQL_ROOT_PASSWORD: ''
-    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    MYSQL_DATABASE: zftest
-    MYSQL_USER: zftest
-    MYSQL_PASSWORD: zftest
-    COMPOSER_HOME: $CI_PROJECT_DIR/composer
-  services:
-    - name: mysql:5.6
-      command: ["mysqld",  '--character-set-server=utf8', '--collation-server=utf8_unicode_ci']
-    - name: memcached:1
-  before_script:
-    - composer install --no-interaction --prefer-source
-    - cp ./tests/TestConfiguration.gitlab.php ./tests/TestConfiguration.php
-  script:
-    - composer test
+    image: $CONTAINER_REGISTRY/devops/php:$PHP_VERSION
+    parallel:
+        matrix:
+            -   PHP_VERSION: [ '8.1', '8.2', '8.3' ]
+    stage: test
+    variables:
+        MYSQL_ROOT_PASSWORD: ''
+        MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        MYSQL_DATABASE: zftest
+        MYSQL_USER: zftest
+        MYSQL_PASSWORD: zftest
+        COMPOSER_HOME: $CI_PROJECT_DIR/composer
+    services:
+        -   name: mysql:5.6
+            command: [ "mysqld",  '--character-set-server=utf8', '--collation-server=utf8_unicode_ci' ]
+        -   name: memcached:1
+    before_script:
+        - composer install --no-interaction --prefer-source
+        - cp ./tests/TestConfiguration.gitlab.php ./tests/TestConfiguration.php
+    script:
+        - composer test
 
 # job comes from Composer.gitlab-ci.yml
 publish:
-  stage: deploy
-  needs:
-    - test
-  only:
-    - master
-    - tags
+    stage: deploy
+    needs:
+        - test
+    only:
+        - master
+        - tags
