@@ -127,7 +127,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Setup Locale
         run: |
@@ -139,7 +139,7 @@ jobs:
         run: cp tests/TestConfiguration.env.php tests/TestConfiguration.php
 
       - name: Install PHP with minimal extensions
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2
         with:
           php-version: ${{ matrix.php-version }}
           tools: cs2pr
@@ -154,7 +154,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
@@ -178,7 +178,7 @@ jobs:
           tests/resources/openldap/docker-entrypoint-initdb.d/init.sh
 
       - name: Install PHP with extensions
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2
         with:
           php-version: ${{ matrix.php-version }}
           tools: cs2pr
